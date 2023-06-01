@@ -1,0 +1,101 @@
+"PROGRAM_CDE","PROGRAM_DESC","CIP_CDE","AWARD_LVL_CDE","DISTANCE_CDE"
+1,"Football (Soccer)","000001","1a",1
+2,"Basketball","000002","1a",1
+3,"Tennis","000003","2",1
+4,"Golf","000004","3",2
+5,"Cricket","000005","3",2
+6,"Rugby","000006","1a",1
+7,"Baseball","000007","1b",1
+8,"Volleyball","000008","1b",1
+9,"Badminton","000009","1b",2
+10,"Athletics","000010","3",1
+11,"Swimming","000011","1b",2
+12,"Table Tennis","000012","3",2
+13,"Boxing","000013","1b",2
+14,"Ice Hockey","000014","2",2
+15,"Wrestling","000015","1a",2
+16,"Cycling","000016","1b",2
+17,"American Football","000017","2",1
+18,"Martial Arts","000018","3",1
+19,"Field Hockey","000019","3",2
+20,"Gymnastics","000020","3",1
+21,"Skiing","000021","2",1
+22,"Snowboarding","000022","1a",1
+23,"Sailing","000023","3",2
+24,"Rowing","000024","2",1
+25,"Canoeing","000025","3",2
+26,"Kayaking","000026","1b",1
+27,"Surfing","000027","2",1
+28,"Horse Racing","000028","1b",1
+29,"Formula 1 Racing","000029","1b",2
+30,"Motorcycling","000030","1b",2
+31,"Archery","000031","3",1
+32,"Shooting","000032","1b",2
+33,"Fencing","000033","1b",1
+34,"Triathlon","000034","1b",2
+35,"Weightlifting","000035","1b",1
+36,"Powerlifting","000036","1a",1
+37,"Triathlon","000037","3",2
+38,"Skateboarding","000038","3",2
+39,"Roller Skating","000039","1b",2
+40,"Inline Skating","000040","1b",1
+41,"Lacrosse","000041","2",1
+42,"Polo","000042","1a",2
+43,"Squash","000043","2",1
+44,"Polo","000044","1a",1
+45,"Handball","000045","2",1
+46,"Water Polo","000046","2",1
+47,"Ultimate Frisbee","000047","2",1
+48,"Netball","000048","2",2
+49,"Bocce","000049","1b",2
+50,"Curling","000050","1b",1
+51,"Croquet","000051","1a",1
+52,"Darts","000052","1b",2
+53,"Billiards","000053","1b",2
+54,"Snooker","000054","3",1
+55,"Kabaddi","000055","2",2
+56,"Paddleboarding","000056","3",2
+57,"Beach Volleyball","000057","3",1
+58,"Rhythmic Gymnastics","000058","1a",2
+59,"Orienteering","000059","1b",2
+60,"Crossfit","000060","1b",2
+61,"Parkour","000061","2",2
+62,"Kiteboarding","000062","3",1
+63,"Kendo","000063","1a",2
+64,"Paragliding","000064","1b",2
+65,"Paralympic Sports","000065","1b",1
+66,"Sepak Takraw","000066","1a",1
+67,"Calisthenics","000067","1b",1
+68,"Sumo Wrestling","000068","1a",2
+69,"Hurling","000069","1a",2
+70,"Gaelic Football","000070","1b",1
+71,"Aussie Rules Football","000071","1a",2
+72,"Kabaddi","000072","1a",1
+73,"Tug of War","000073","1b",2
+74,"Underwater Hockey","000074","3",1
+75,"Underwater Rugby","000075","2",1
+76,"Roller Derby","000076","2",1
+77,"Basque Pelota","000077","1b",1
+78,"Jai Alai","000078","1a",2
+79,"Tejo","000079","3",1
+80,"Buzkashi","000080","1a",1
+81,"Hiking","000081","2",1
+82,"Mountaineering","000082","2",1
+83,"Rock Climbing","000083","2",2
+84,"Orienteering","000084","1b",2
+85,"Cross-Country Skiing","000085","3",2
+86,"Snowshoeing","000086","3",1
+87,"Ice Skating","000087","1a",1
+88,"Freestyle Skiing","000088","1a",1
+89,"Paraskiing","000089","3",1
+90,"Snowmobiling","000090","1b",2
+91,"Wakeboarding","000091","1a",2
+92,"Stand-Up Paddleboarding","000092","3",1
+93,"Equestrian Vaulting","000093","1b",1
+94,"Equestrian Dressage","000094","2",2
+95,"Equestrian Show Jumping","000095","1a",2
+96,"Equestrian Eventing","000096","1b",1
+97,"Trampoline","000097","1b",2
+98,"High Diving","000098","2",2
+99,"Polo","000099","1b",1
+100,"Arm Wrestling","000100","1b",2
