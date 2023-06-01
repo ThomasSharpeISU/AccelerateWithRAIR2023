@@ -1,0 +1,157 @@
+---
+title: "Liberate Your Time: Accelerate With R"
+subtitle: "Highlights and Examples"
+author: "Thomas Sharpe, thomassharpe@isu.edu"
+date: "AIR Forum: June 2023"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    lib_dir: libs
+    css: [default,metropolis,metropolis-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# So Many Project Ideas, Not Enough Time!
+
+--
+
+.pull-left[
+
+Fancy Visualizations (gganimate)
+
+![](intro/population_animation.gif)
+
+]
+
+--
+
+.pull-right[
+
+Fancy Machine Learning (lots of R packages):
+
+![](intro/clusplot.png)
+
+]
+
+--
+
+<b> It can be quite hard to find the time to explore and enhance </b>
+
+---
+
+# Objective
+
+## Scope
+
+- Demonstrate a few examples of leveraging a tool like R to speed up processes.
+
+--
+
+- Highlight key R packages and brief overview of the code flow.
+
+--
+
+- Spur curiosity and ideas.
+
+--
+
+- If you think, "Hey, I can do that better, or I might tweak that a bit." That's Great!
+
+--
+
+## Overview
+
+- Getting Data
+- Wrangling Data
+- Text File Creation
+- Excel File Creation
+- Multiple HTML/PDF Files Creation
+- Discussion and Q&A
+
+---
+
+# College of Southern Idaho (CSI)
+
+## Analytics and Institutional Research (AIR) Team
+
+- FTE: 2.5 to 3.0
+- Scope: Decision support, business intelligence, data-related compliance. Teamwork with IT on data governance.
+
+--
+
+## Implemented Software
+
+- Jenzabar EX ERP / SIS
+- Microsoft SQL Server
+- No Enterprise Data Warehouse
+- Power BI
+
+
+<b> These solutions should be agnostic to the software used at most institutions </b>
+
+---
+
+# Live Coding Session
+
+![](intro/carlyton.gif)
+
+---
+
+# Notes
+
+--
+
+## Limitations
+
+- Reporting requirement changes.
+- Business process changes.
+- Software changes.
+
+--
+
+## Outcomes
+
+This work has allowed for... (team effort big time!!!)
+
+- Implementation of fairly wide-spread business intelligence usage
+
+--
+
+- Promptly keeping up with new requirements (e.g. NWCCU disaggregation) https://www.csi.edu/institutional-effectiveness/institutional-research/data-at-a-glance/default.aspx
+
+--
+
+- Predictive analytics and implementation with stakeholders. 
+
+--
+
+- Beginning of data literacy training.
+
+--
+
+- Improving institution-wide data documentation.
+
+
+
+
+---
+
+# Conclusion
+
+
+<b> See conference material for what we worked through together.</b>
+
+--
+
+<figure class="video_container">
+  <iframe src="https://www.youtube.com/embed/TOUrLn1FFCA?start=55&end=71" style="width:100%; height:450px; frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+
+---
+
+# Discussion and Q&A
+
+
