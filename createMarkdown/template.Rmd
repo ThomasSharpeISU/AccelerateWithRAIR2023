@@ -1,0 +1,52 @@
+---
+title: "Completions"
+author: "Data Wizards"
+date: "June 2023"
+output: html_document
+---
+
+<style type="text/css">
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+## Objective
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 6)
+
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Thomas Sharpe\\Documents\\thomasIR\\air2023')
+```
+
+```{r prepEnvironment}
+
+library(dplyr)
+library(ggplot2)
+library(scales)
+library(ggpubr)
+library(RColorBrewer)
+
+```
+
+## Completers (Unduplicated Headcount)
+
+```{r}
+
+pProgram <-
+  ggplot(data = dCurProgram,
+         aes(x = ACAD_YEAR, y = students)) +
+  geom_line(group = 1, color = 'darkgoldenrod2') + 
+  geom_point(size = 2) +
+  geom_text(aes(label = comma(students)), vjust = 2, size = 6) +
+  scale_y_continuous(limits = c(0, NA), labels = comma) +
+  labs(title = curProgramDesc, x = "Academic Year", y = "Students Completing (unduplicated)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = .5), text = element_text(size = 18))
+
+ggarrange(pProgram, pOverall, nrow = 1, ncol = 2)
+
+```
+
