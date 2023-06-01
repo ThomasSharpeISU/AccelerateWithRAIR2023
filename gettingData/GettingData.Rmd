@@ -1,0 +1,125 @@
+---
+title: "Liberate Your Time: Accelerate with R - Getting Data"
+author: "Thomas Sharpe,"
+date: "2023-05-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 6)
+
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Thomas Sharpe\\Documents\\thomasIR\\air2023')
+
+```
+
+## Getting Data
+
+### Reading Text Files (.csv, .txt) 
+
+I typically simply copy/paste the directory from my Windows File Explorer and add the additional backslash. Other options (e.g. file.path() function, switch to forward slash)
+
+```{r, echo=TRUE}
+
+#In my day-to-day, I had SharePoint synced so it was in my file explorer just than another file directory. I would operate out of SharePoint and so these paths would almost always be a SharePoint directory of some sort.
+dPrograms <- read.csv('data\\programData.csv')
+
+```
+
+
+### Reading Excel Files (.xlsx)
+
+Several options for this. I tend to use the readxl packages, as it doesnt require a Java install.
+
+
+```{r}
+
+library(readxl)
+dCompletions <- read_excel('data\\completionData22.xlsx')
+
+```
+
+
+### Databases
+
+We need to load csv's and excel files from time-to-time. Really though, the following represents more of the day-to-day work process. Getting data directly from databases.
+
+<b>Prereq:</b> Set up an odbc connection to your database. In Windows, start the process by going to ODBC Data Sources.
+
+
+```{r}
+
+library(odbc)
+library(DBI)
+library(keyring)
+
+key_set("nameForUserName")
+key_get("nameForUserName")
+
+#key_set("nameForUserName")
+#key_set("nameForPassword")
+
+```
+
+
+```{r}
+
+#con <- DBI::dbConnect(odbc(),dsn = "nameForODBCConnection", UID = key_get("nameForUserName"), PWD = key_get("nameForPassword"))
+
+
+```
+
+You obviously will not be querying my database. You will need to set up your odbc connection, key_set() your username and passwords and key_get() what you have set up.
+
+Nice feature of Rmarkdown files in RStudio. You can have different language code chunks (e.g. sql)!
+
+```{sql, connection = con}
+
+Select
+  *
+from completionsAIR
+where SUBSTR(ACAD_YEAR,1,4) BETWEEN '2019' and '2022'
+fetch first 50 rows only
+
+```
+
+You can also load the result right into an R dataframe.
+
+```{sql, connection = con, output.vars = "dPastCompletions"}
+
+Select
+  *
+from completionsAIR
+where SUBSTR(ACAD_YEAR,1,4) BETWEEN '2019' and '2022'
+fetch first 50 rows only
+
+
+```
+
+In my experience/opinion, sql code chucks are nice for short and simple sql queries. I tend to prefer to write more complex sql in another editor (e.g. VSCode, SSMS, Oracle Developer). As such, back to R, you can take a prewritten query and load data that way:
+
+```{r}
+
+dPastCompletions <- dbGetQuery(con, "Select * from completionsAIR where SUBSTR(ACAD_YEAR,1,4) BETWEEN '2019' and '2022' fetch first 50 rows only")
+
+```
+
+Notice that the sql query against the database is simply a string. As such, is it possible to read a .sql file into an R string variable? You may have guessed, the answer would be yes! :)
+
+See the readSQLScript.R file for code/function that parses a .sql file into a character string in R. It handles some sql character (e.g. --) that might have caused problems. 
+
+Couple notes. 
+
+* I didnt write this, it came from: https://stackoverflow.com/questions/44853322/how-to-read-the-contents-of-an-sql-file-into-an-r-script-to-run-a-query
+
+
+* I have used it a ton with T-SQL with no problems (sometimes needing to include SET NOCOUNT ON; in my sql files if using multiple temp tables). Havent tested it much with other sql variants, though I suspect it will work pretty well.
+
+```{r}
+
+source('gettingData\\readSQLScript.R')
+
+qPastCompletions <- getSQL('gettingData\\sqlScript.sql')
+dPastCompletions <- dbGetQuery(con, qPastCompletions)
+
+```
