@@ -1,0 +1,95 @@
+---
+title: "Liberate Your Time: Accelerate with R - Create Excel"
+author: "Thomas Sharpe,"
+date: "2023-05-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 6)
+
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Thomas Sharpe\\Documents\\thomasIR\\air2023')
+
+```
+
+### Excel File Creation
+
+
+```{r}
+
+library(dplyr)
+library(openxlsx)
+library(tidyr)
+
+#My process is loading prepared data from our IR Datamart. So you can run it, reading from files.
+#Reminder. This is simulated (fake) data
+dPrograms <- read.csv('data\\programData.csv')
+dCompleteFull <- read.csv('data\\completionsFull.csv')
+
+dCompleteFull <- inner_join(dCompleteFull,dPrograms[,c(1:2)])
+
+```
+
+
+```{r}
+
+dProgramYear <-
+  dCompleteFull %>%
+  group_by(PROGRAM_DESC, ACAD_YEAR) %>%
+  summarise(students = n_distinct(STUDENT_ID))
+
+dProgramYearWide <- 
+  dProgramYear %>%
+  pivot_wider(names_from = ACAD_YEAR, values_from = students)
+
+# assuming your data frame name is df
+write.xlsx(dProgramYearWide, "completionSummary.xlsx") #write to an excel file
+
+# load workbook
+wb <- loadWorkbook("completionSummary.xlsx")
+
+# create style for center alignment
+centerStyle <- createStyle(halign = "center")
+
+# apply center alignment style to the columns 2-4
+for (col in 2:5) {
+    addStyle(wb, sheet = 1, style = centerStyle, rows = 1:(nrow(dProgramYearWide) + 1), cols = col)
+}
+
+# define a style for headers (bold and border below)
+headerStyle <- createStyle(fontSize = 11, textDecoration = "bold",
+                           border = "bottom",halign = "center")
+
+# apply header style to the first row
+addStyle(wb, sheet = 1, headerStyle, rows = 1, cols = 1:5, gridExpand = TRUE)
+
+freezePane(wb, sheet = 1, firstRow = TRUE)
+
+addFilter(wb, sheet = 1, row = 1, cols = 1:5)
+
+upStyle <- createStyle(bgFill = "#00FF00")
+downStyle <- createStyle(bgFill = "#FF0000")
+
+conditionalFormatting(wb, sheet = 1,
+  cols = 5,
+  rows = 2:100, rule = "D2<E2", style = upStyle
+)
+
+conditionalFormatting(wb, sheet = 1,
+  cols = 5,
+  rows = 2:100, rule = "D2>E2", style = downStyle
+)
+
+setColWidths(wb, sheet = 1, cols = 1:1, widths = "auto")
+
+for (col in 2:5) {
+  setColWidths(wb, sheet = 1, cols = col, widths = 12) # Change the width as per your requirement
+}
+
+# save the workbook
+saveWorkbook(wb, "completionSummary.xlsx", overwrite = TRUE)
+
+
+```
+
