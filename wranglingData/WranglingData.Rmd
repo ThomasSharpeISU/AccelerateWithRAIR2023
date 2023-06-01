@@ -1,0 +1,62 @@
+---
+title: "Liberate Your Time: Accelerate with R - Wrangle Data"
+author: "Thomas Sharpe,"
+date: "2023-05-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 6)
+
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Thomas Sharpe\\Documents\\thomasIR\\air2023')
+
+```
+
+## Wrangling Data
+
+As this presentation is not intended to be an R tutorial, this section will be brief. In short, the dplyr functionality is great. Readable and quick. Personally preferred over alternatives in Python (e.g. pandas). Just me though! :)
+
+```{r, eval = FALSE}
+
+library(dplyr)
+
+#This framework is useful super often.
+newDF <-
+  df %>%
+  filter() %>%
+  group_by() %>%
+  summarise() %>%
+  arrange()
+
+```
+
+## RStudio Cope Snippets
+
+Tools -> Edit Code Snippets
+
+Within that menu:
+
+snippet dplyrTemplate (call it whatever you want)
+	df <-
+		filter() %>%
+		group_by() %>%
+		summarise() %>%
+		arrange()
+		
+Most IDE's have something like this. I have used it more for SQL than R though truthfully. Institution-specific common queries or common starting points for queries. <b>Huge time saver </b> ( beats AI, for now :) ) 
+
+
+```{r, eval = FALSE}
+
+# Start typing the name of snippet, it will show up in your suggestions after three characters entered, press tab and bam.
+
+df <-
+  filter() %>%
+  group_by() %>%
+  summarise() %>%
+  arrange()
+
+```
+
+
