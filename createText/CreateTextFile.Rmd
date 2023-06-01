@@ -15,8 +15,6 @@ knitr::opts_knit$set(root.dir = 'C:\\Users\\Thomas Sharpe\\Documents\\thomasIR\\
 
 ## Text File Creation
 
-Probably gonna cheat during the session and copy/paste this :)
-
 ```{r}
 
 library(dplyr)
