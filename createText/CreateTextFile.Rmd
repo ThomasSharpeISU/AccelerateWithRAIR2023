@@ -1,0 +1,203 @@
+---
+title: "Liberate Your Time: Accelerate with R - Code Text Files"
+author: "Thomas Sharpe,"
+date: "2023-05-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 6)
+
+knitr::opts_knit$set(root.dir = 'C:\\Users\\Thomas Sharpe\\Documents\\thomasIR\\air2023')
+
+```
+
+## Text File Creation
+
+Probably gonna cheat during the session and copy/paste this :)
+
+```{r}
+
+library(dplyr)
+library(readxl)
+library(stringr)
+
+#My process is loading prepared data from our IR Datamart. So you can run it, reading from files.
+#Reminder. This is simulated (fake) data
+dPrograms <- read.csv('data\\programData.csv')
+dCompletions <- read_excel('data\\completionData22.xlsx')
+
+```
+
+
+```{r}
+
+unitID = '999999'
+surveySECT <- 'COM'
+majorNum <- 1
+reportYear <- '202122'
+
+fileName <- paste("Completions_",reportYear,".txt", sep = "")
+if(file.exists(fileName)) {file.remove(fileName)}
+
+dPrograms$CIP_CDE<- str_pad(dPrograms$CIP_CDE, 6, side = "left", pad = 0)
+dPrograms$CIP_CDE <- paste(substr(dPrograms$CIP_CDE,1,2), '.',substr(dPrograms$CIP_CDE,3,7), sep='')
+
+#glimpse(dPrograms)
+
+dCompletions$CIP_CDE <- str_pad(dCompletions$CIP_CDE, 6, side = "left", pad = 0)
+dCompletions$CIP_CDE <- paste(substr(dCompletions$CIP_CDE,1,2), '.',substr(dCompletions$CIP_CDE,3,7), sep='')
+
+#glimpse(dCompletions)
+
+
+#Part A: Awards by CIP & Award Level
+part <- "A"
+
+programLength <- length(dPrograms$CIP_CDE)
+for (cipRow in 1:programLength) {
+  
+  #Descriptive information and variables used later
+  curCIP <- dPrograms[cipRow,3]
+  curAward <- dPrograms[cipRow,4]
+  
+  #For each CIP/Award, loop through each race counting Men and Women
+  for (curRace in 1:9){
+    
+    for (curGender in 1:2) {
+      
+      curCount <- as.numeric(
+        dCompletions %>% 
+          filter(CIP_CDE == curCIP & AWARD_LVL_CDE == curAward & ETHNIC_CDE == curRace & GENDER_CDE == curGender) %>%
+          summarise(count = length(STUDENT_ID))
+      )
+      
+      
+      cat('UNITID=' ,unitID,
+          ',SURVSECT=',surveySECT,
+          ',PART=A',',MAJORNUM=1',
+          ',CIPCODE=',curCIP,
+          ',AWLEVEL=', curAward,
+          ',RACE=',curRace,
+          ',SEX=',curGender,
+          ',COUNT=', curCount,
+          file = fileName, sep = "", append = TRUE)
+      cat("\n", file = fileName, append = TRUE)
+      
+    } #Next Gender
+  } #Next Race
+} #Next CIP
+
+
+#Part B: Distance Ed
+for (cipRow in 1:programLength){
+  
+  curCIP <- dPrograms[cipRow,3]
+  curAward <- dPrograms[cipRow,4]
+  curDistance <- dPrograms[cipRow,5]
+  
+  cat('UNITID=' ,unitID,
+      ',SURVSECT=',surveySECT,
+      ',PART=B',',MAJORNUM=1',
+      ',CIPCODE=',curCIP,
+      ',AWLEVEL=', curAward,
+      ',DistanceED=', curDistance,
+      file = fileName, sep = "", append = TRUE)
+  cat("\n", file = fileName, append = TRUE)
+  
+} #Next CIP
+
+#Part C: Completions Headcounts
+for(curRace in 1:9){
+  
+  
+  for (curGender in 1:2) {
+    
+    curCount <- as.numeric(
+      dCompletions %>% 
+        filter(ETHNIC_CDE == curRace & GENDER_CDE == curGender) %>%
+        summarise(count = n_distinct(STUDENT_ID))
+    )
+    
+    cat('UNITID=' ,unitID,
+        ',SURVSECT=',surveySECT,
+        ',PART=C',
+        ',RACE=',curRace,
+        ',SEX=',curGender,
+        ',COUNT=', curCount,
+        file = fileName, sep = "", append = TRUE)
+    cat("\n", file = fileName, append = TRUE)
+    
+  } #Next Gender
+} #Next Race
+
+
+#Part D: Headcount by Award Level
+# The txt file specs for this one are not quite as clean... May be better way of coding this :)
+
+
+awardLevels <-
+  dPrograms %>%
+  select(AWARD_LVL_CDE) %>%
+  distinct() %>%
+  arrange(AWARD_LVL_CDE) %>%
+  mutate(ctLevel = ifelse(AWARD_LVL_CDE == '1a', 8,
+                          ifelse(AWARD_LVL_CDE == '1b',9,
+                                 ifelse(AWARD_LVL_CDE == '2', 2,
+                                        ifelse(AWARD_LVL_CDE == '3',3,
+                                               4)))))
+
+
+for (awardLoop in 1:4) {
+  
+  curAwardLevel <- awardLevels[awardLoop,1]
+  curCTLevel <- awardLevels[awardLoop,2]
+  
+  tempData <- dCompletions %>% filter(AWARD_LVL_CDE == curAwardLevel)
+  
+  cat('UNITID=' ,unitID,',SURVSECT=',surveySECT,',PART=D',  file = fileName,sep = "", append = TRUE)
+  
+  #Gender counts
+  maleCount <- as.numeric(tempData %>% filter(GENDER_CDE == 1) %>% summarise(count = n_distinct(STUDENT_ID)))
+  femaleCount <- as.numeric(tempData %>% filter(GENDER_CDE == 2) %>% summarise(count = n_distinct(STUDENT_ID)))
+  
+  #txt output
+  cat(',CTLEVEL=',curCTLevel,',CRACE15=',maleCount,',CRACE16=', femaleCount, file = fileName, sep = "", append = TRUE)
+  
+  #Race counts
+  for (curRace in 1:9){
+    
+    curCount <- tempData %>% filter(ETHNIC_CDE == curRace) %>% summarise(count = n_distinct(STUDENT_ID))
+    curCount <- as.numeric(curCount)
+    
+    #txt output
+    curlabel <- if(curRace == 1) {17} 
+    else if (curRace == 2) {41}
+    else if (curRace == 3) {42}
+    else if (curRace == 4) {43}
+    else if (curRace == 5) {44}
+    else if (curRace == 6) {45}
+    else if (curRace == 7) {46}
+    else if (curRace == 8) {47}
+    else if (curRace == 9) {23}
+    
+    cat(',CRACE',curlabel,'=',curCount, file = fileName, sep = "", append = TRUE)
+    
+  }
+  
+  #Age counts
+  for (curAge in 1:5){
+    
+    curCount <- as.numeric(tempData %>% filter(AGE_CDE == curAge) %>% summarise(count = n_distinct(STUDENT_ID)))
+    #txt output
+    cat(',AGE',curAge,'=',curCount, file = fileName, sep = "", append = TRUE)
+    
+  }
+  
+  #Next award level
+  if (awardLoop < 5) {cat("\n", file = fileName, append = TRUE)}
+}
+
+
+```
