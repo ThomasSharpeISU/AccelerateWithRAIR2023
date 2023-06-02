@@ -142,14 +142,11 @@ This work has allowed for... (team effort big time!!!)
 # Conclusion
 
 
-<b> See conference material for what we worked through together.</b>
+<b>https://github.com/ThomasSharpeISU/AccelerateWithRAIR2023</b>
 
 --
 
-<figure class="video_container">
-  <iframe src="https://www.youtube.com/embed/TOUrLn1FFCA?start=55&end=71" style="width:100%; height:450px; frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-
+![](intro/coolBeans.gif)
 ---
 
 # Discussion and Q&A
